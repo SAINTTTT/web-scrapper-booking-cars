@@ -23,6 +23,7 @@ content = s.find_all('price') """
 prices = driver.find_elements(By.CLASS_NAME, "price")
 names = driver.find_elements(By.CLASS_NAME, "sc-b0eaf57-12.kviJWz")
 
+PRICE_THRESHOLD = 690
 TOKEN = os.getenv("TELEGRAM_TOKEN")
 CHAT_ID = os.getenv("CHAT_ID")
 
@@ -31,7 +32,7 @@ print(TOKEN)
 for i in range(len(names)):
     #print(f"{names[i].text}: ${prices[i].text}")
     value = int(prices[i].text.split()[1].replace(".", "")) 
-    if value < 700:
+    if value < PRICE_THRESHOLD:
         url = f"https://api.telegram.org/bot{TOKEN}/sendMessage"
         params = {
             "chat_id": CHAT_ID,
