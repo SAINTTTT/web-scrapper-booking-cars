@@ -2,13 +2,18 @@ from time import sleep
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
+from webdriver_manager.chrome import ChromeDriverManager
+from webdriver_manager.utils import ChromeType
+from selenium.webdriver.chrome.service import Service
 import requests
 import os
+
+chrome_service = Service(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install())
 
 options = Options()
 options.add_argument("--headless")
 
-driver = webdriver.Chrome(options=options)
+driver = webdriver.Chrome(service=chrome_service,options=options)
 url = os.getenv("BOOKING_URL")
 driver.get(url)
 sleep(13)
