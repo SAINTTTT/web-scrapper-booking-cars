@@ -1,16 +1,15 @@
 from time import sleep
-from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
+import requests
+import os
 
 options = Options()
 options.add_argument("--headless")
 
 driver = webdriver.Chrome(options=options)
-url = ""
+url = os.getenv("BOOKING_URL")
 driver.get(url)
 sleep(13)
 """ soup = BeautifulSoup(driver.page_source, 'html.parser')
@@ -20,6 +19,24 @@ content = s.find_all('price') """
 prices = driver.find_elements(By.CLASS_NAME, "price")
 names = driver.find_elements(By.CLASS_NAME, "sc-b0eaf57-12.kviJWz")
 
+TOKEN = os.getenv("TELEGRAM_TOKEN")
+CHAT_ID = os.getenv("CHAT_ID")
+
+print(TOKEN)
+
 for i in range(len(names)):
-    print(f"{names[i].text}: ${prices[i].text}")
+    #print(f"{names[i].text}: ${prices[i].text}")
+    value = int(prices[i].text.split()[1].replace(".", "")) 
+    if value < 700:
+        url = f"https://api.telegram.org/bot{TOKEN}/sendMessage"
+        params = {
+            "chat_id": CHAT_ID,
+            "text": f"Hay una oferta!!! {names[i].text}: ${prices[i].text}"
+        }
+        
+        response = requests.post(url, data=params)
+        print(response.status_code)
+        print(response.json())
+
+
 driver.quit()
