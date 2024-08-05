@@ -32,7 +32,13 @@ jobs:
         sudo chown root:root /usr/local/bin/chromedriver
         sudo chmod +x /usr/local/bin/chromedriver
         sudo apt-get install -y xvfb
-
+    
+    - name: My first action
+      env:
+        TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+        CHAT_ID: ${{ secrets.CHAT_ID }}
+        BOOKING_URL: ${{ secrets.BOOKING_URL }}
+        
     - name: Run scraper
       run: |
         xvfb-run --auto-servernum --server-args='-screen 0 1920x1080x24' python main.py
