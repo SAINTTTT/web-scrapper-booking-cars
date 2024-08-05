@@ -18,6 +18,8 @@ s = soup.find('div', class_='sc-b0eaf57-15 esCopK')
 content = s.find_all('price') """
 
 prices = driver.find_elements(By.CLASS_NAME, "price")
-for price in prices:
-    print(price.text)
+names = driver.find_elements(By.CLASS_NAME, "sc-b0eaf57-12.kviJWz")
+
+for i in range(len(names)):
+    print(f"{names[i].text}: ${prices[i].text}")
 driver.quit()
