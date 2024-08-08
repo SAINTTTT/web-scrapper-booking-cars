@@ -1,6 +1,6 @@
 # Car Price Alert Bot
 
-This project helps you receive alerts on Telegram for cars that have a price lower than your desired threshold. Currently, it is set up to notify you for prices below $700.
+This project helps you receive alerts on Telegram for cars that have a price lower than your desired threshold. Currently, it is set up to notify you for prices below $1000.
 
 ## How It Works
 
