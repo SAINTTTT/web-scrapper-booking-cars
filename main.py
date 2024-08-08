@@ -23,9 +23,10 @@ content = s.find_all('price') """
 prices = driver.find_elements(By.CLASS_NAME, "price")
 names = driver.find_elements(By.CLASS_NAME, "sc-b0eaf57-12.kviJWz")
 
-PRICE_THRESHOLD = 690
+PRICE_THRESHOLD = 1000
 TOKEN = os.getenv("TELEGRAM_TOKEN")
 CHAT_ID = os.getenv("CHAT_ID")
+message = ""
 
 print(TOKEN)
 
@@ -33,15 +34,16 @@ for i in range(len(names)):
     #print(f"{names[i].text}: ${prices[i].text}")
     value = int(prices[i].text.split()[1].replace(".", "")) 
     if value < PRICE_THRESHOLD:
-        url = f"https://api.telegram.org/bot{TOKEN}/sendMessage"
-        params = {
-            "chat_id": CHAT_ID,
-            "text": f"Hay una oferta!!! {names[i].text}: ${prices[i].text}"
-        }
+        message += f"{names[i].text}: ${prices[i].text} \n"
+url = f"https://api.telegram.org/bot{TOKEN}/sendMessage"
+params = {
+    "chat_id": CHAT_ID,
+    "text": message 
+}
         
-        response = requests.post(url, data=params)
-        print(response.status_code)
-        print(response.json())
+response = requests.post(url, data=params)
+print(response.status_code)
+print(response.json())
 
 
 driver.quit()
