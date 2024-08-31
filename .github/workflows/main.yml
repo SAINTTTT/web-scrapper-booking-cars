@@ -1,8 +1,8 @@
 name: Run Selenium Web Scraper
 
 on:
-  schedule:
-    - cron: '0 12,0 * * *' # Cada hora
+  #schedule:
+    #- cron: '0 12,0 * * *' # Cada hora
   push:
     branches:
       - master
